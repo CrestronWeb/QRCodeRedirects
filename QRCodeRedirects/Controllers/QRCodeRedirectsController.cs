@@ -18,11 +18,11 @@ using CrestronClasses.Classes.Logger;
 
 namespace QRCodeRedirects.Controllers
 {
-    [CustomAuthorize(Roles = "AdminRewardBalances")]
+    [CustomAuthorize(Roles = "AdminQRC")]
     public class QRCodeRedirectsController : Controller
     {
         private WebAppsEntities db = new WebAppsEntities();
-        ILogger logger = new EmailLogger(System.AppDomain.CurrentDomain.FriendlyName, ConfigurationManager.AppSettings["ErrorNotificationEmail"].ToString(), "Aplus Rewards Balance Admin - Error Occured");
+        ILogger logger = new EmailLogger(System.AppDomain.CurrentDomain.FriendlyName, ConfigurationManager.AppSettings["ErrorNotificationEmail"].ToString(), "QR Code Redirects Admin - Error Occured");
 
         // GET: QRCodeRedirects
         public async Task<ActionResult> Index()
