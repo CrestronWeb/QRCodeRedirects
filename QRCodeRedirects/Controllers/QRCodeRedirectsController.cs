@@ -11,18 +11,18 @@ using QRCodeRedirects.Models;
 using System.Configuration;
 using System.Net.Http;
 using QRCodeRedirects.BL;
+using System.IO;
+using System.Data.Entity.Core;
+using CrestronClasses.Interfaces.ILogger;
+using CrestronClasses.Classes.Logger;
 
 namespace QRCodeRedirects.Controllers
 {
+    [CustomAuthorize(Roles = "AdminQRC")]
     public class QRCodeRedirectsController : Controller
     {
         private WebAppsEntities db = new WebAppsEntities();
-        private string userQueryKey = (ConfigurationManager.AppSettings["UserQueryKey"]);
-        private string userByLoggedInUserQueryType = (ConfigurationManager.AppSettings["UserByLoggedInUserQueryType"]);
-        private string userByLoggedInUserURL = (ConfigurationManager.AppSettings["UserByLoggedInUserURL"]);
-        private string UserByLegacyUserIDURL = (ConfigurationManager.AppSettings["UserByLegacyUserIDURL"]);
-        private string userByCustomerIDURL = (ConfigurationManager.AppSettings["UserByCustomerIDURL"]);
-        private bool debugging = Convert.ToBoolean(ConfigurationManager.AppSettings["Debug"]);
+        ILogger logger = new EmailLogger(System.AppDomain.CurrentDomain.FriendlyName, ConfigurationManager.AppSettings["ErrorNotificationEmail"].ToString(), "QR Code Redirects Admin - Error Occured");
 
         // GET: QRCodeRedirects
         public async Task<ActionResult> Index()
